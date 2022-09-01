@@ -49,7 +49,7 @@ app.post("/voca/add", (req, res) => {
       eng: req.body.eng,
       kor: req.body.kor,
       id: result.vocasTotal,
-      isDone: req.body.isDone,
+      isDone: parseBoolean(req.body.isDone),
     };
     db.collection("vocas").insertOne(insertData, (err, result) => {
       db.collection("counter").updateOne({ name: "count" }, { $inc: { vocasTotal: 1 } }, (err, result) => {
@@ -80,6 +80,20 @@ app.get("/voca/:day", (req, res) => {
     .toArray((err, result) => {
       res.json(result);
     });
+});
+
+app.delete("/voca/:id", (req, res) => {
+  console.log(req.params.id);
+  // res.send("delete")
+  //db연결해서 지우기
+  const _id = parseInt(req.params.id);
+  db.collection("vocas").deleteOne({ id: _id }, (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.json({ delete: "ok" });
+    }
+  });
 });
 app.listen(PORT, () => {
   console.log(`${PORT}에서 서버 대기중`);
