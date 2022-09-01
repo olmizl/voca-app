@@ -45,11 +45,11 @@ app.post("/day/add", (req, res) => {
 app.post("/voca/add", (req, res) => {
   db.collection("counter").findOne({ name: "count" }, (err, result) => {
     const insertData = {
-      day: req.body.day,
+      day: parseInt(req.body.day),
       eng: req.body.eng,
       kor: req.body.kor,
       id: result.vocasTotal,
-      isDone: parseBoolean(req.body.isDone),
+      isDone: false,
     };
     db.collection("vocas").insertOne(insertData, (err, result) => {
       db.collection("counter").updateOne({ name: "count" }, { $inc: { vocasTotal: 1 } }, (err, result) => {
