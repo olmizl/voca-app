@@ -95,6 +95,15 @@ app.delete("/voca/:id", (req, res) => {
     }
   });
 });
+
+app.put("/voca/:id", (req, res) => {
+  const _id = parseInt(req.params.id);
+  const _isDone = Boolean(req.body.isDone);
+  console.log(_isDone);
+  db.collection("vocas").updateOne({ id: _id }, { $set: { isDone: _isDone } }, (err, result) => {
+    res.json({ update: "ok" });
+  });
+});
 app.listen(PORT, () => {
   console.log(`${PORT}에서 서버 대기중`);
 });
