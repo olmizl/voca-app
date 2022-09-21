@@ -6,7 +6,7 @@ const cors = require("cors");
 app.set("port", process.env.PORT || 8099);
 const PORT = app.get("port");
 app.use(cors());
-// mongodb관련 모듈
+// mongodb관련 모듈 칸 입니다
 const MongoClient = require("mongodb").MongoClient;
 
 let db = null;
